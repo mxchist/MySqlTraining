@@ -44,6 +44,7 @@ values (N'Afghanistan'), (N'Albania'), (N'Algeria'), (N'American Samoa'), (N'And
 , (N'Venezuela'), (N'Vietnam'), (N'Virgin Islands'), (N'Wallis and Futuna'), (N'Western Sahara')
 , (N'Yemen'), (N'Zambia'), (N'Zimbabwe');
 
+-- временная таблица, связь название страны - административная единица
 create temporary table if not exists lesson1_db.coun_unit(
 	country_name nvarchar(4000)
 	, adm_unit_name nvarchar(4000)
@@ -4209,4 +4210,8 @@ from lesson1_db.coun_unit as u
 right join lesson1_db.country as c on u.country_name = c.country_name
 ;
 
+-- удаляем временную таблицу страна - административная единица
 drop table if exists lesson1_db.coun_unit;
+
+
+

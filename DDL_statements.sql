@@ -14,7 +14,7 @@ country_id int2 auto_increment
 );
 
 
-
+-- Административные единицы наподобие областей в России
 create table if not exists lesson1_db.administrative_unit (
 unit_id int8 auto_increment
 , unit_name nvarchar(500) not null
@@ -25,7 +25,7 @@ unit_id int8 auto_increment
 on update cascade on delete cascade
 );
 
-
+-- попробуем на эту вьюху навесить внешний ключ
 create or replace view lesson1_db.VW_administrative_unit
 as
 select unit_id, unit_name , country_id from lesson1_db.administrative_unit
@@ -33,5 +33,4 @@ union all
 select max(unit_id) + 1, null, null
 from lesson1_db.administrative_unit
 ;
-
 
