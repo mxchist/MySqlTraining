@@ -34,3 +34,13 @@ select max(unit_id) + 1, null, null
 from lesson1_db.administrative_unit
 ;
 
+create table lesson1_db.city (
+	city_id int8 auto_increment
+    , country_id int2 not null
+    , city_name nvarchar(100) not null
+    , constraint PK_City primary key (city_id)
+    , constraint UQ_CountryId_CityName unique (country_id, city_name)
+    , constraint FK_City_Country_CountryId foreign key (country_id) references country(country_id)
+		on update cascade on delete cascade
+)
+
