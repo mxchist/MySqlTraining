@@ -2,10 +2,6 @@ drop schema if exists lesson1_db;
 
 create schema if not exists lesson1_db;
 
-drop table if exists lesson1_db.coun_unit;
-drop table if exists lesson1_db.administrative_unit;
-drop table if exists lesson1_db.country;
-
 create table if not exists lesson1_db.country (
 country_id int2 auto_increment
 , country_name nvarchar(100)
@@ -34,7 +30,7 @@ select max(unit_id) + 1, null, null
 from lesson1_db.administrative_unit
 ;
 
-create table lesson1_db.city (
+create table if not exists lesson1_db.city (
 	city_id int8 auto_increment
     , country_id int2 not null
     , city_name nvarchar(100) not null
@@ -42,5 +38,14 @@ create table lesson1_db.city (
     , constraint UQ_CountryId_CityName unique (country_id, city_name)
     , constraint FK_City_Country_CountryId foreign key (country_id) references country(country_id)
 		on update cascade on delete cascade
-)
+);
 
+create table if not exists lesson1_db.russian_city (
+	city_id int8 auto_increment
+    , unit_id int8 not null
+    , city_name nvarchar(100) not null
+    , constraint PK_RussianCity primary key (city_id)
+    , constraint UQ_UnitId_CityName unique (unit_id, city_name)
+    , constraint FK_RussianCity_AdministrativeUnit_UnitId foreign key (unit_id) references administrative_unit(unit_id)
+		on update cascade on delete cascade
+)
