@@ -6380,7 +6380,7 @@ values (N'Giaginsky District', N'stanitsa', N'Giaginskaya')
 , (N'Zubovo-Polyansky District', N'work', N'Zubova Polyana')
 ;
 
-insert into lesson1_db.local_country(unit_id, local_country_name, local_country_type)
+insert into lesson1_db.local_country(local_unit_id, local_country_name, local_country_type)
 select 
 	 au.local_unit_id, s.settlement_name, ut.id
 from lesson1_db.settlements as s
@@ -6389,5 +6389,4 @@ inner join lesson1_db.local_country_type as ut on ut.type_name = s.settlement_ty
 order by au.local_unit_name;
 
 drop table if exists lesson1_db.settlements;
-
 

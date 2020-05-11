@@ -68,11 +68,11 @@ create table if not exists lesson1_db.local_country_type (
 
 create table if not exists lesson1_db.local_country (
 	local_country_id int8 auto_increment
-    , unit_id int8 not null
+    , local_unit_id int8 not null
     , local_country_name nvarchar(100)
     , local_country_type int2
     , constraint PK_LocalCountry primary key (local_country_id)
-    , constraint FK_LocalCountry_AdministrativeUnit foreign key (unit_id) references administrative_unit(unit_id)
+    , constraint FK_LocalCountry_AdministrativeUnit foreign key (local_unit_id) references local_administrative_unit(local_unit_id)
     on update cascade on delete cascade
     , constraint FK_LocalCountry_СountryType foreign key (local_country_type) references local_country_type(id)
     on update cascade on delete cascade
