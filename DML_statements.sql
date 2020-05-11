@@ -4496,7 +4496,7 @@ create temporary table if not exists lesson1_db.regional_city(
 	, city_name nvarchar(4000)
 );
 
-insert into lesson1_db.local_administrative_unit_type (local_unit_type_name)
+insert into lesson1_db.local_administrative_unit_type (type_name)
 values ('City'), ('District');
 
 insert into lesson1_db.regional_city (unit_name, city_name)
@@ -4589,7 +4589,7 @@ select
 	 au.unit_id, rc.city_name, ut.id
 from lesson1_db.regional_city as rc
 inner join lesson1_db.administrative_unit as au on au.unit_name = rc.unit_name
-inner join lesson1_db.local_administrative_unit_type as ut on ut.local_unit_type_name = N'City'
+inner join lesson1_db.local_administrative_unit_type as ut on ut.type_name = N'City'
 order by rc.city_name
 ;
 
@@ -5485,11 +5485,10 @@ select
 	 au.unit_id, rc.district_name, ut.id
 from lesson1_db.regional_district as rc
 inner join lesson1_db.administrative_unit as au on au.unit_name = rc.unit_name
-inner join lesson1_db.local_administrative_unit_type as ut on ut.local_unit_type_name = N'District'
+inner join lesson1_db.local_administrative_unit_type as ut on ut.type_name = N'District'
 order by rc.district_name;
 
 drop table if exists lesson1_db.regional_district;
 
-select * from lesson1_db.local_administrative_unit
-
+-- insert into lesson1_db.local_country_type(type_name)
 

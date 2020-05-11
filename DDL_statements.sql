@@ -42,21 +42,39 @@ create table if not exists lesson1_db.city (
 
 create table if not exists lesson1_db.local_administrative_unit_type (
 	id int1 not null auto_increment
-    , local_unit_type_name nvarchar(100) not null
+    , type_name nvarchar(100) not null
     , constraint PK_LocalAdministrativeUnitType primary key (id)
 
 );
 
 create table if not exists lesson1_db.local_administrative_unit (
-	city_id int8 auto_increment
+	local_unit_id int8 auto_increment
     , unit_id int8 not null
     , local_unit_name nvarchar(100) not null
     , local_unit_type int1 not null
-    , constraint PK_LocalAdministrativeUnit primary key (city_id)
+    , constraint PK_LocalAdministrativeUnit primary key (local_unit_id)
     , constraint UQ_UnitId_CityName unique (unit_id, local_unit_name)
     , constraint FK_LocalAdministrativeUnit_AdministrativeUnit_UnitId foreign key (unit_id) references administrative_unit(unit_id)
 		on update cascade on delete cascade
     , constraint FK_LocalAdministrativeUnit_AdministrativeUnitType foreign key (local_unit_type) references local_administrative_unit_type(id)
 		on update cascade on delete cascade
 );
+
+create table if not exists lesson1_db.local_country_type (
+	id int2  auto_increment
+	, type_name nvarchar(100)
+    , constraint PK_LocalCountryType primary key (id)
+);
+
+create table if not exists lesson1_db.local_country (
+	local_country_id int8 auto_increment
+    , unit_id int8 not null
+    , local_country_name nvarchar(100)
+    , local_country_type int2
+    , constraint PK_LocalCountry primary key (local_country_id)
+    , constraint FK_LocalCountry_AdministrativeUnit foreign key (unit_id) references administrative_unit(unit_id)
+    on update cascade on delete cascade
+    , constraint FK_LocalCountry_СountryType foreign key (local_country_type) references local_country_type(id)
+    on update cascade on delete cascade
+)
 
