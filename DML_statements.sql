@@ -4496,10 +4496,10 @@ create temporary table if not exists lesson1_db.regional_city(
 	, city_name nvarchar(4000)
 );
 
-insert into local_administrative_unit_type (local_unit_type_name)
+insert into lesson1_db.local_administrative_unit_type (local_unit_type_name)
 values ('City'), ('District');
 
-insert into lesson1_db.local_administrative_unit (unit_name, city_name)
+insert into lesson1_db.regional_city (unit_name, city_name)
 values (N'Adygea', N'Maykop')
 , (N'Bashkortostan', N'Ufa')
 , (N'Buryatia', N'Ulan-Ude')
@@ -4584,16 +4584,17 @@ values (N'Adygea', N'Maykop')
 , (N'Republic of Crimea', N'Simferopol')
 ;
 
-insert into lesson1_db.russian_city (unit_id, city_name)
+insert into lesson1_db.local_administrative_unit (unit_id, local_unit_name, local_unit_type_id)
 select 
-	c.unit_id, rc.city_name
+	 au.unit_id, rc.city_name, ut.local_unit_type_id
 from lesson1_db.regional_city as rc
-inner join lesson1_db.administrative_unit as c on c.unit_name = rc.unit_name
+inner join lesson1_db.administrative_unit as au on au.unit_name = rc.unit_name
+inner join lesson1_db.local_administrative_unit_type as ut on ut.local_unit_type_name = N'City'
+order by rc.city_name
 ;
 
 drop table if exists lesson1_db.regional_city;
 
-select * from lesson1_db.russian_city
 
 
 
