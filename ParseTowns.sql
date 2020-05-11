@@ -12,12 +12,8 @@ N'Russian Federation'
 --	, substring( t.unit.value('(td[3])[1]', 'nvarchar(1000)'), 1, charindex (' ', t.unit.value('(td[3])[1]', 'nvarchar(1000)') ) -1	)
 --) as settlement_type
 --, t.unit.value('td[3]/a[1]', 'nvarchar(1000)')				as "settlement_name"
-, x.b.query('
-for $j in 
-	for $i in table/tbody/tr[position() > 1]
-	return $i
-where position() = 2 or position() = 3
-return $j
+, x.b.query('for $i in table/tbody/tr[position() > 1]/td[position() = 2 or position() = 3]
+return $i
 ')
 
 from countries_xml as x
