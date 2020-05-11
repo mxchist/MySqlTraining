@@ -40,12 +40,23 @@ create table if not exists lesson1_db.city (
 		on update cascade on delete cascade
 );
 
-create table if not exists lesson1_db.russian_city (
+create table if not exists lesson1_db.local_administrative_unit_type (
+	local_unit_type_id int1 not null auto_increment
+    , local_unit_type_name nvarchar(100) not null
+    , constraint PK_LocalAdministrativeUnitType primary key (local_unit_type_id)
+
+);
+
+create table if not exists lesson1_db.local_administrative_unit (
 	city_id int8 auto_increment
     , unit_id int8 not null
-    , city_name nvarchar(100) not null
-    , constraint PK_RussianCity primary key (city_id)
-    , constraint UQ_UnitId_CityName unique (unit_id, city_name)
-    , constraint FK_RussianCity_AdministrativeUnit_UnitId foreign key (unit_id) references administrative_unit(unit_id)
+    , local_unit_name nvarchar(100) not null
+    , local_unit_type_id int1 not null
+    , constraint PK_LocalAdministrativeUnit primary key (city_id)
+    , constraint UQ_UnitId_CityName unique (unit_id, local_unit_name)
+    , constraint FK_LocalAdministrativeUnit_AdministrativeUnit_UnitId foreign key (unit_id) references administrative_unit(unit_id)
 		on update cascade on delete cascade
-)
+    , constraint FK_LocalAdministrativeUnit_AdministrativeUnitType foreign key (local_unit_type_id) references local_administrative_unit_type(local_unit_type_id)
+		on update cascade on delete cascade
+);
+

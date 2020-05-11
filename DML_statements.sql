@@ -4496,7 +4496,10 @@ create temporary table if not exists lesson1_db.regional_city(
 	, city_name nvarchar(4000)
 );
 
-insert into lesson1_db.regional_city (unit_name, city_name)
+insert into local_administrative_unit_type (local_unit_type_name)
+values ('City'), ('District');
+
+insert into lesson1_db.local_administrative_unit (unit_name, city_name)
 values (N'Adygea', N'Maykop')
 , (N'Bashkortostan', N'Ufa')
 , (N'Buryatia', N'Ulan-Ude')
