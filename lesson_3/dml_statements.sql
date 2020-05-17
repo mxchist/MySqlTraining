@@ -42,7 +42,7 @@ inner join lesson3_db.dept_emp as de on de.emp_no = emp.emp_no
 -- проверка, что по каждому сотруднику учитывалась только зарплата во время работы его в отделе de.dept_no
 where de.from_date <= sl.from_date and de.to_date >= sl.to_date
 -- если необходимо  увидеть среднюю зарплату в текущий момент
--- and sl.to_date > current_date()	
+-- and de.to_date > current_date()	
 group by de.dept_no
 -- для проверки
 -- order by emp.emp_no
@@ -82,5 +82,25 @@ from lesson3_db.dept_emp as de
 -- убедиться, возвращаемый результат актуален на текущий момент, сравнение даты окончания с текущей датой
 where de.to_date > current_date();
 
-
+-- 5 количество сотрудников в отделах и посмотреть, сколько всего денег получает отдел
+select
+	average_salaries.salary_sum
+    , average_salaries.employer_qry
+    , d.dept_name
+from  (
+select
+	avg(sl.salary) as salary_avg
+    , sum(sl.salary) as salary_sum
+    , count(sl.emp_no) as employer_qry
+	, de.dept_no
+from lesson3_db.salaries as sl
+inner join lesson3_db.employees as emp on emp.emp_no = sl.emp_no
+inner join lesson3_db.dept_emp as de on de.emp_no = emp.emp_no
+-- чтобы не перемещались актуальные данные с историческими, проверяем что сотрудник сейчас работает и это его последняя должность на текущий момент
+where de.to_date > current_date()	
+group by de.dept_no
+-- для проверки
+-- order by emp.emp_no
+) as average_salaries
+inner join lesson3_db.departments as d on d.dept_no = average_salaries.dept_no
 
