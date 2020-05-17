@@ -64,11 +64,13 @@ from (
 ) as salaries_max
 inner join lesson3_db.employees as emp on emp.emp_no = salaries_max.emp_no;
 
-select
-*
-from lesson3_db.departments;
+-- 3 Удалить одного сотрудника, у которого максимальная зарплата
+begin work;
 
-select
-*
-from lesson3_db.salaries as sl
-where sl.emp_no = 10001;
+delete emp
+from lesson3_db.employees as emp
+where emp.emp_no = (	select  sl.emp_no		-- сотрудник должен быть именно 1 - по условию задачи, удалить нужно одного сотрудника.
+-- если у двух сотрудников будет одинаковая зарплата, равная максимальной, то удаление через сравнение с max(salary) может привести к удалению обоих (не так как в задаче)
+	from lesson3_db.salaries as sl	order by sl.salary limit 1 )	;
+
+rollback ;
