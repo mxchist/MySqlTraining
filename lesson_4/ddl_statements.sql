@@ -42,3 +42,14 @@ begin
 end
 //
 
+-- 3. Триггер, который при добавлении нового сотрудника будет выплачивать ему вступительный бонус, занося запись об этом в таблицу salary.
+drop trigger if exists ins_employee;
+delimiter //
+create trigger ins_employees after insert
+on lesson3_db.employees for each row 
+begin
+	declare salary_payment int;
+    insert into lesson3_db.salaries (emp_no, salary, from_date, to_date)
+    values (NEW.emp_no, 1000, CURDATE(), CURDATE());
+end
+//

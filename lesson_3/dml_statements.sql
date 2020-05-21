@@ -1,16 +1,3 @@
-select
-*
-from geodata._regions;
-
-select
-*
-from geodata._cities;
-
-select
-*
-from geodata._countries;
-
-
 -- 1 все данные о городе – регион, страна.
 select
 ct.title, r.title, cntr.title
