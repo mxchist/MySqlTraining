@@ -1,3 +1,5 @@
+use lesson3_db
+
 -- 1. VIEW на основе запросов в ДЗ к уроку 3
 create or replace view lesson3_db.vw_average_salary_by_departments
 as
@@ -23,4 +25,20 @@ group by de.dept_no
 ) as average_salaries
 inner join lesson3_db.departments as d on d.dept_no = average_salaries.dept_no
 ;
+
+-- 2. функция для поиска менеджера по имени и фамилии
+drop function if exists lesson3_db.fn_get_manager_byfirstname_lastname;
+delimiter //
+create function lesson3_db.fn_get_manager_byfirstname_lastname  (firstname varchar(14), lastname varchar(16))
+returns int
+reads sql data
+begin
+	declare emp_no int;
+    select
+    e.emp_no
+    into emp_no
+    from  lesson3_db.employees as e;
+    return emp_no;
+end
+//
 
