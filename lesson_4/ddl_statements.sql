@@ -28,19 +28,22 @@ inner join lesson3_db.departments as d on d.dept_no = average_salaries.dept_no
 
 -- 2. функция для поиска менеджера по имени и фамилии
 drop function if exists lesson3_db.fn_get_manager_byfirstname_lastname;
-delimiter //
-create function lesson3_db.fn_get_manager_byfirstname_lastname  (firstname varchar(14), lastname varchar(16))
-returns int
+delimiter $$
+create function fn_get_manager_byfirstname_lastname  (firstname varchar(14), lastname varchar(16))
+returns int DETERMINISTIC
 reads sql data
 begin
 	declare emp_no int;
     select
     e.emp_no
     into emp_no
-    from  lesson3_db.employees as e;
+    from  employees as e
+    where e.first_name = firstname and e.last_name = lastname
+    limit 1
+    ;
     return emp_no;
 end
-//
+$$
 
 -- 3. Триггер, который при добавлении нового сотрудника будет выплачивать ему вступительный бонус, занося запись об этом в таблицу salary.
 drop trigger if exists ins_employee;
